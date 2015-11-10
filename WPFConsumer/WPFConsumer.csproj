@@ -96,13 +96,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Client\Client.csproj">
-      <Project>{f0bec215-11ea-4442-ad53-1fa68eee2811}</Project>
-      <Name>Client</Name>
+    <ProjectReference Include="..\PortableClient\PortableClient.csproj">
+      <Project>{3A881A11-D51D-4034-84F7-0238FF2EF552}</Project>
+      <Name>PortableClient</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{69C78166-4109-4E1E-AFE4-BC1DB21BE759}</Project>
-      <Name>Models</Name>
+    <ProjectReference Include="..\PortableModels\PortableModels.csproj">
+      <Project>{23B7155C-738F-4D52-B77D-1E7AFA064226}</Project>
+      <Name>PortableModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
