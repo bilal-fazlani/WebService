@@ -1,22 +1,22 @@
 ﻿using System;
-using Client;
-using Models;
+using PortableClient;
+using PortableModels;
 
 namespace ConsoleConsumer
 {
     class Program
     {
-        private static readonly CarsClient CarsClient = new CarsClient();
+        private static readonly CarsClient CarsClient = new CarsClient("BILALMUSTAF3107");
 
         static void Main(string[] args)
         {
-            var addedCar = CarsClient.AddCar(new Car
+            var addedCar = CarsClient.AddCarAsync(new Car
             {
                 Number = Guid.NewGuid().ToString(),
                 Model = Guid.NewGuid().ToString()
-            });
+            }).Result;
 
-            foreach (var car in CarsClient.GetCars())
+            foreach (var car in CarsClient.GetCarsAsync().Result)
             {
                 PrintCar(car);
             }
@@ -26,18 +26,19 @@ namespace ConsoleConsumer
 
             addedCar.Number = addedCar.Number += $"_updated_{DateTime.Now.Ticks}";
 
-            CarsClient.ModifyCar(addedCar.Id, addedCar);
+            CarsClient.ModifyCarAsync(addedCar.Id, addedCar).Wait();
 
             Console.WriteLine("-------------");
 
-            PrintCar(CarsClient.GetCar(addedCar.Id));
+            PrintCar(CarsClient.GetCarAsync(addedCar.Id).Result);
 
             Console.WriteLine("----------------");
 
-            var deletedCar = CarsClient.DeleteCar(addedCar.Id);
+            var deletedCar = CarsClient.DeleteCarAsync(addedCar.Id).Result;
             PrintCar(deletedCar);
 
-            var invalidCar = CarsClient.GetCar(deletedCar.Id);
+            //throws error because the car is deleted, hence commented
+            //var invalidCar = CarsClient.GetCarAsync(deletedCar.Id).Result;
 
             Console.ReadLine();
         }

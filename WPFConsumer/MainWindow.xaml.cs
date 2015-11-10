@@ -13,8 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Client;
-using Models;
+using PortableClient;
+using PortableModels;
 
 namespace WPFConsumer
 {
@@ -23,7 +23,7 @@ namespace WPFConsumer
     /// </summary>
     public partial class MainWindow : Window
     {
-        static readonly CarsClient Client = new CarsClient();
+        static readonly CarsClient Client = new CarsClient("BILALMUSTAF3107");
 
         public MainWindow()
         {
