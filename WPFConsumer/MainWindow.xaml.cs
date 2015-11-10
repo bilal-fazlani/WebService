@@ -42,6 +42,12 @@ namespace WPFConsumer
 
         private async void AddClicked(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(ModelTxt.Text)
+                && string.IsNullOrWhiteSpace(NumberTxt.Text))
+            {
+                return;
+            }
+
             await Client.AddCarAsync(new Car
             {
                 Model = ModelTxt.Text,
