@@ -9,13 +9,16 @@ using Android.Widget;
 using Android.OS;
 using System.Linq;
 using PortableClient;
+using PortableModels;
 
 namespace AndroidConsumer
 {
     [Activity(Label = "AndroidConsumer", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        readonly CarsClient _client = new CarsClient("BILALMUSTAF3107");
+        private readonly ApiClient<Car> _client = new ApiClient<Car>
+            ("http://BILALMUSTAF3107/webservice/api/mycars/");
+
         private ArrayAdapter _adapter;
 
         protected override async void OnCreate(Bundle bundle)
@@ -27,7 +30,7 @@ namespace AndroidConsumer
 
             ListView carListView = FindViewById<ListView>(Resource.Id.carlistView);
 
-            List<string> cars = (await _client.GetCarsAsync()).Select(x=>x.Model).ToList();
+            List<string> cars = (await _client.GetAllAsync()).Select(x=>x.Model).ToList();
 
             _adapter = new ArrayAdapter(
                 this,

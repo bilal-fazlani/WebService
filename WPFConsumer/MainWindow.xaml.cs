@@ -23,7 +23,8 @@ namespace WPFConsumer
     /// </summary>
     public partial class MainWindow : Window
     {
-        static readonly CarsClient Client = new CarsClient("BILALMUSTAF3107");
+        private readonly ApiClient<Car> _client = new ApiClient<Car>
+            ("http://BILALMUSTAF3107/webservice/api/mycars/");
 
         public MainWindow()
         {
@@ -37,7 +38,7 @@ namespace WPFConsumer
 
         private async Task Rebind()
         {
-            dataGrid.ItemsSource = await Client.GetCarsAsync();
+            dataGrid.ItemsSource = await _client.GetAllAsync();
         }
 
         private async void AddClicked(object sender, RoutedEventArgs e)
@@ -48,7 +49,7 @@ namespace WPFConsumer
                 return;
             }
 
-            await Client.AddCarAsync(new Car
+            await _client.AddAsync(new Car
             {
                 Model = ModelTxt.Text,
                 Number = NumberTxt.Text
@@ -67,7 +68,7 @@ namespace WPFConsumer
 
             foreach (Car car in allCars)
             {
-                await Client.DeleteCarAsync(car.Id);
+                await _client.DeleteAsync(car.Id);
                 await Rebind();
             }
         }

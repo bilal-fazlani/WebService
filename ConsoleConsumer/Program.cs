@@ -6,17 +6,18 @@ namespace ConsoleConsumer
 {
     class Program
     {
-        private static readonly CarsClient CarsClient = new CarsClient("BILALMUSTAF3107");
+        private static readonly ApiClient<Car> Client = new ApiClient<Car>
+            ("http://BILALMUSTAF3107/webservice/api/mycars/");
 
         static void Main(string[] args)
         {
-            var addedCar = CarsClient.AddCarAsync(new Car
+            var addedCar = Client.AddAsync(new Car
             {
                 Number = Guid.NewGuid().ToString(),
                 Model = Guid.NewGuid().ToString()
             }).Result;
 
-            foreach (var car in CarsClient.GetCarsAsync().Result)
+            foreach (var car in Client.GetAllAsync().Result)
             {
                 PrintCar(car);
             }
@@ -26,15 +27,15 @@ namespace ConsoleConsumer
 
             addedCar.Number = addedCar.Number += $"_updated_{DateTime.Now.Ticks}";
 
-            CarsClient.ModifyCarAsync(addedCar.Id, addedCar).Wait();
+            Client.UpdateAsync(addedCar.Id, addedCar).Wait();
 
             Console.WriteLine("-------------");
 
-            PrintCar(CarsClient.GetCarAsync(addedCar.Id).Result);
+            PrintCar(Client.GetAsync(addedCar.Id).Result);
 
             Console.WriteLine("----------------");
 
-            var deletedCar = CarsClient.DeleteCarAsync(addedCar.Id).Result;
+            var deletedCar = Client.DeleteAsync(addedCar.Id).Result;
             PrintCar(deletedCar);
 
             //throws error because the car is deleted, hence commented
