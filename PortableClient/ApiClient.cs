@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using RestSharp.Portable;
 
@@ -39,10 +40,10 @@ namespace PortableClient
             return response.Data;
         }
 
-        public async Task<T> AddAsync(T car)
+        public async Task<T> AddAsync(T entity)
         {
             RestRequest request = new RestRequest(HttpMethod.Post);
-            request.AddJsonBody(car);
+            request.AddJsonBody(entity);
             var response = await _restClient.Execute<T>(request);
             return response.Data;
         }
